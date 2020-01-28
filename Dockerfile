@@ -10,8 +10,17 @@ rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
 rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
-RUN dnf -y install openssh-server; systemctl enable sshd; systemctl start sshd; systemctl status sshd
-RUN dnf -y upgrade; dnf -y autoremove; dnf clean all
-EXPOSE 22
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
+# for openssh
+RUN dnf -y install chpasswd openssh-server
+RUN mkdir /var/run/sshd
+RUN echo 'root:Xa0Iegh3' | chpasswd
+ENV NOTVISIBLE "in users profile"
+RUN echo "export VISIBLE=now" >> /etc/profile
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+RUN systemctl enable sshd; systemctl start sshd; systemctl status sshd
+RUN dnf -y upgrade; dnf -y autoremove; dnf clean all
+EXPOSE 22
