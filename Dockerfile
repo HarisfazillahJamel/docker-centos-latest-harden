@@ -29,7 +29,7 @@ RUN dnf -y upgrade; dnf -y autoremove; dnf clean all
 RUN useradd user1 -m -s /bin/bash && \
     echo "Xa0Iegh3" > password.txt && \
     echo "user1:`cat password.txt`" | chpasswd && \
-    usermod -a -G sudo user1 && \
+    usermod -a -G wheel user1 && \
     mkdir -p /home/user1/GITHUB && \
     chown user1:user1 /home/user1/GITHUB && \
     echo "PASSWORD For user1 is `cat password.txt`" && \
