@@ -21,6 +21,9 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 # SSH login fix. Otherwise user is kicked off after login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
-RUN systemctl enable sshd; systemctl start sshd; systemctl status sshd
+###RUN systemctl enable sshd; systemctl start sshd; systemctl status sshd
+### still not work - System has not been booted with systemd as init system (PID 1). Can't operate.
 RUN dnf -y upgrade; dnf -y autoremove; dnf clean all
 EXPOSE 22
+VOLUME ["/var/run/sshd"]
+CMD ["/usr/sbin/sshd", "-D"]
