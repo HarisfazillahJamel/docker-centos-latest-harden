@@ -13,7 +13,7 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
 # for openssh
-RUN dnf -y install chpasswd openssh-server
+RUN dnf -y install shadow-utils openssh-server
 RUN mkdir /var/run/sshd
 RUN echo 'root:Xa0Iegh3' | chpasswd
 ENV NOTVISIBLE "in users profile"
