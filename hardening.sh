@@ -1,7 +1,7 @@
 #!/bin/bash
 # Harisfazillah Jamel
 # Origin: https://github.com/HarisfazillahJamel/docker-ubuntu-14.04-harden
-# This script for Ubuntu
+# This script for  Centos
 #
 # Copyright (c) 2015-2020 Harisfazillah Jamel <linuxmalaysia@gmail.com>
 #
@@ -23,6 +23,11 @@
 # applied hardening scripts. Use this Dockerfile and scripts related at your own risk.
 # Harisfazillah Jamel - Kuala Lumpur - Malaysia - 28 Jan 2020
 
+# Install required group
+
+dnf -y groupinstall 'System Tools'
+dnf -y groupinstall 'Security Tools'
+
 # Need to restart ssh and stop to initalize files
 
 #service ssh restart
@@ -30,7 +35,6 @@
 
 # Crete SSH Key
 
-#ssh-keygen -A
 ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -N ""
 
 exit 0
