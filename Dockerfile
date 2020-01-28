@@ -10,7 +10,8 @@ rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
 rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
-RUN dnf install openssh-server; systemctl enable sshd; systemctl start sshd; systemctl status sshd
+RUN dnf -y install openssh-server; systemctl enable sshd; systemctl start sshd; systemctl status sshd
+RUN dnf -y upgrade; dnf -y autoremove; dnf clean all
 EXPOSE 22
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
