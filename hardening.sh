@@ -25,11 +25,12 @@
 
 # Need to restart ssh and stop to initalize files
 
-service ssh restart
-service ssh stop
+#service ssh restart
+#service ssh stop
 
 # Crete SSH Key
 
+#ssh-keygen -A
 ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -N ""
 
 exit 0

@@ -13,8 +13,9 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
 # for openssh
-RUN dnf -y install shadow-utils openssh-server
+RUN dnf -y install shadow-utils sudo openssh-server
 RUN mkdir /var/run/sshd
+RUN ssh-keygen -A
 RUN echo 'root:Xa0Iegh3' | chpasswd
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
@@ -24,6 +25,15 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 ###RUN systemctl enable sshd; systemctl start sshd; systemctl status sshd
 ### still not work - System has not been booted with systemd as init system (PID 1). Can't operate.
 RUN dnf -y upgrade; dnf -y autoremove; dnf clean all
+# Add user1
+RUN useradd user1 -m -s /bin/bash && \
+    echo "Xa0Iegh3" > password.txt && \
+    echo "user1:`cat password.txt`" | chpasswd && \
+    usermod -a -G sudo user1 && \
+    mkdir -p /home/user1/GITHUB && \
+    chown user1:user1 /home/user1/GITHUB && \
+    echo "PASSWORD For user1 is `cat password.txt`" && \
+    echo "### End Of add user1"
 # Hardening Initialization and Startup Script
 ADD hardening.sh /hardening.sh
 RUN chmod 755 /hardening.sh
