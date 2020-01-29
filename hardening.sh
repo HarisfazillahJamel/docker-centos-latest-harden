@@ -27,14 +27,17 @@
 
 dnf -y groupinstall 'System Tools'
 dnf -y groupinstall 'Security Tools'
-
-# Need to restart ssh and stop to initalize files
-
-#service ssh restart
-#service ssh stop
+dnf -y install git nmap
 
 # Crete SSH Key
 
 ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -N ""
+
+# to include LinuxMalaysia ASIMP
+cd /home/user1
+git clone https://github.com/linuxmalaysia/ASIMP.git
+cd /home/user1/ASIMP
+ansible-galaxy install -r requirements.yml
+#ansible-playbook --connection=local play-localhost.yml
 
 exit 0

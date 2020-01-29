@@ -13,7 +13,7 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
 # for openssh
-RUN dnf -y install shadow-utils sudo openssh-server
+RUN dnf -y install git shadow-utils sudo openssh-server
 RUN mkdir /var/run/sshd
 RUN ssh-keygen -A
 RUN echo 'root:Xa0Iegh3' | chpasswd
@@ -30,10 +30,24 @@ RUN useradd user1 -m -s /bin/bash && \
     echo "Xa0Iegh3" > password.txt && \
     echo "user1:`cat password.txt`" | chpasswd && \
     usermod -a -G wheel user1 && \
+    echo "### End Of add user1"
+
+RUN echo "########################################" && \
+    echo " " && \
+    echo "PASSWORD For user1 is `cat password.txt`" && \
+    echo " " && \
+    echo "example to run :- " && \
+    echo "docker pull linuxmalaysia/docker-centos-latest-harden" && \
+    echo "docker run --privileged=true -it -d -P --name my_centos8 linuxmalaysia/docker-centos-latest-harden" && \
+    echo " " && \
+    echo "########################################" && \
     mkdir -p /home/user1/GITHUB && \
     chown user1:user1 /home/user1/GITHUB && \
-    echo "PASSWORD For user1 is `cat password.txt`" && \
-    echo "### End Of add user1"
+    cd /home/user1/GITHUB && \
+    git clone https://github.com/HarisfazillahJamel/docker-centos-latest-harden.git && \
+    cd && \
+    pwd
+
 # Hardening Initialization and Startup Script
 ADD hardening.sh /hardening.sh
 RUN chmod 755 /hardening.sh
