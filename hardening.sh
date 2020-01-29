@@ -60,6 +60,9 @@ ansible --version
 #virtualenv venv
 #ansible --version
 
+### need by lynis
+dnf -y cronie
+
 # to include LinuxMalaysia ASIMP
 cd /home/user1
 git clone https://github.com/linuxmalaysia/ASIMP.git
