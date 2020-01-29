@@ -33,6 +33,33 @@ dnf -y install git nmap
 
 ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -N ""
 
+# Install Ansible
+# for centos 8
+
+dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+dnf -y install python3-pip
+alternatives --set python /usr/bin/python3
+python --version
+
+dnf install -y python3-virtualenv
+
+dnf -y install ansible
+ansible --version
+
+### this to use latest ansible
+# https://www.getpagespeed.com/work/install-latest-stable-ansible-on-centos-rhel-8
+#
+#In your Ansible-powered project, create virtualenv:
+#
+#virtualenv venv
+#. venv/bin/activate
+#pip install ansible
+#
+#Now Ansible is safely installed to venv of your project. Whenever you need to run it, make sure to activate the virtual environment first, e.g.:
+#
+#virtualenv venv
+#ansible --version
+
 # to include LinuxMalaysia ASIMP
 cd /home/user1
 git clone https://github.com/linuxmalaysia/ASIMP.git
