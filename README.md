@@ -9,7 +9,7 @@ https://hub.docker.com/repository/docker/linuxmalaysia/docker-centos-latest-hard
 This docker is installed with :-
 
 - OpenSSH
-- LinuxMalaysia ASIMP
+- LinuxMalaysia ASIMP in /home/user1
   https://github.com/linuxmalaysia/ASIMP.git
 
 Latest information in the docker/Dockerfile and hardening[.]sh

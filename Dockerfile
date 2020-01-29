@@ -13,7 +13,7 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
 # for openssh
-RUN dnf -y install git shadow-utils sudo openssh-server
+RUN dnf -y install vim git shadow-utils sudo openssh-server
 RUN mkdir /var/run/sshd
 RUN ssh-keygen -A
 RUN echo 'root:Xa0Iegh3' | chpasswd

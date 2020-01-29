@@ -63,6 +63,13 @@ ansible --version
 ### need by lynis
 dnf -y cronie
 
+# https://github.com/ansible-community/ara
+# Install ARA and Ansible for the current user
+python3 -m pip install --user ansible "ara[server]"
+
+# Tell Ansible to use the ARA callback plugin
+export ANSIBLE_CALLBACK_PLUGINS="$(python3 -m ara.setup.callback_plugins)"
+
 # to include LinuxMalaysia ASIMP
 cd /home/user1
 git clone https://github.com/linuxmalaysia/ASIMP.git
